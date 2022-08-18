@@ -278,3 +278,4 @@ core/templates/index.html
 *.user
 *.sln
 .vscode/settings.json
+.idea
