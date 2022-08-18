@@ -15,8 +15,10 @@ from rest_framework.exceptions import ValidationError
 class SponsorListApiView(generics.ListCreateAPIView):
     queryset = Sponsor.objects.all()
     serializer_class = SponsorSerializer
+
     pagination_class = CustomPagination
     permission_classes = (IsAuthenticated,)
+
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     ordering_fields = ['datesp']
     search_fields = ['name', 'organization_name']
@@ -32,6 +34,7 @@ class SponsorListApiView(generics.ListCreateAPIView):
 class SponsorRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Sponsor.objects.select_related('user').all()
     serializer_class = SponsorSerializer
+
     permission_classes = (IsAuthenticated,)
 
     @method_decorator(cache_page(60 * 60 * 2))
@@ -42,8 +45,10 @@ class SponsorRetrieveView(generics.RetrieveUpdateDestroyAPIView):
 class StudentListCreateView(generics.ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+
     permission_classes = (IsAuthenticated,)
     pagination_class = CustomPagination
+
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     ordering_fields = ['datest']
     search_fields = ['full_name', 'otm']
@@ -59,6 +64,7 @@ class StudentListCreateView(generics.ListCreateAPIView):
 class StudentRetrieveView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+
     permission_classes = (IsAuthenticated,)
 
     @method_decorator(cache_page(60 * 60 * 2))
@@ -93,8 +99,10 @@ class DashboardView(APIView):
 class ContractListCreateView(generics.ListCreateAPIView):
     queryset = Contract.objects.select_related('student', 'sponsor').all()
     serializer_class = ContractSerializer
+
     permission_classes = (IsAuthenticated,)
     pagination_class = CustomPagination
+
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     ordering_fields = ['date']
     search_fields = ['student__full_name', 'sponsor__name']
